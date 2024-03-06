@@ -1,0 +1,7 @@
+.layout-footer {
+  background-color: red;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+}

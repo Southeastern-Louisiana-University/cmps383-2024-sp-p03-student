@@ -6,6 +6,7 @@ import Home from "./routes/home";
 import Help from "./routes/help";
 import MainLayout from "./routes/_layout";
 import HotelDetails from "./routes/home/hotel-details";
+import FindHotel from "./routes/home/FindHotel";
 
 const router = createBrowserRouter([
   {
@@ -15,8 +16,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
-        children: [{ path: "hotel-details/:foo", element: <HotelDetails /> }],
+        children: [],
       },
+      { path: "/find-hotel", element: <FindHotel /> },
+      { path: "/hotel-details/:foo", element: <HotelDetails /> },
       {
         path: "/help",
         element: <Help />,
