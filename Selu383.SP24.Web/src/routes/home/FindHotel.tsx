@@ -1,29 +1,37 @@
-import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { HotelDto } from "../../features/hotels/HotelDto";
+import { useFetch } from "use-http";
 
 export default function FindHotel() {
   const [params] = useSearchParams();
   const searchTerm = params.get("searchTerm");
 
-  const [hotels, setHotels] = useState<HotelDto[]>([]);
-
-  useEffect(() => {
-    fetch("/api/hotels/find", {
+  const {
+    data: hotels,
+    loading,
+    error,
+  } = useFetch<HotelDto[]>(
+    "/api/hotels/find",
+    {
       method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+      body: {
         searchTerm: searchTerm,
-      }),
-    })
-      .then<HotelDto[]>((r) => r.json())
-      .then((j) => {
-        setHotels(j);
-      });
-  }, [searchTerm]);
-  console.log(searchTerm);
+      },
+    },
+    [searchTerm]
+  );
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return (
+      <div>
+        Error... <button type="button"> try again</button>
+      </div>
+    );
+  }
 
   return (
     <div>
