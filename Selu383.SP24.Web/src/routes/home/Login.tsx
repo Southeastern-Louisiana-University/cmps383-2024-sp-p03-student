@@ -1,10 +1,16 @@
 import { useFetch } from "use-http";
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import AuthContext from "../../features/authentication/AuthContext";
 
 export default function Login() {
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const [userName, setUserName] = useState("galkadi");
+  const [password, setPassword] = useState("Password123!");
   const [error, setError] = useState("");
+
+  const authContext = useContext(AuthContext);
+
   const { loading, post } = useFetch("/api/authentication/login", {
     method: "post",
     onNewData: (_, x) => {
@@ -13,6 +19,8 @@ export default function Login() {
       } else if (typeof x === "object") {
         console.log("we logged in as: ");
         console.log(x);
+        authContext?.setUser(x);
+        navigate("/");
         // TODO: save in context and redirect to home page
       }
     },
