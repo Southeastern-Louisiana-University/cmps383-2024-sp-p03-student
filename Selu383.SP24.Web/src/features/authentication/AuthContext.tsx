@@ -2,7 +2,7 @@ import { createContext } from "react";
 import type UserDto from "./UserDto";
 
 export interface AuthContextProps {
-  user: null | UserDto;
+  user: null | UserDto | undefined;
   setUser: (newUser: null | UserDto) => void;
 }
 
